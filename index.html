@@ -3,347 +3,90 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bitcoin Trading Volume Volatility Analysis (Jan 2024 - Jun 2025)</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <title>Multisig Capital Partners</title>
+    <meta name="description" content="Multisig Capital Partners - Beyond Buy & Hold">
+    <!-- Google Fonts for a modern, professional look -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700;900&display=swap" rel="stylesheet">
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
         body {
             font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0f0f1f 0%, #1a1a2e 100%); /* Dark professional gradient */
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 2rem;
         }
-        .chart-container {
-            position: relative;
+        .container {
+            max-width: 1200px;
             width: 100%;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-            height: 320px;
-            max-height: 400px;
         }
-        @media (min-width: 768px) {
-            .chart-container {
-                height: 380px;
+        .coming-soon {
+            font-size: 1.5rem;
+            font-weight: 300;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            opacity: 0.8;
+            margin-bottom: 2rem;
+        }
+        .tagline {
+            font-size: 4.5rem;
+            font-weight: 900;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+        }
+        .brand {
+            font-size: 3.5rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+        }
+        .subtitle {
+            font-size: 1.3rem;
+            font-weight: 300;
+            max-width: 800px;
+            margin: 3rem auto 0;
+            opacity: 0.9;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .coming-soon {
+                font-size: 1.2rem;
+                margin-bottom: 1.5rem;
+            }
+            .tagline {
+                font-size: 3rem;
+            }
+            .brand {
+                font-size: 2.5rem;
+            }
+            .subtitle {
+                font-size: 1.1rem;
             }
         }
-        .timeline-item::before {
-            content: '';
-            position: absolute;
-            left: -1px;
-            top: 2rem;
-            bottom: -2rem;
-            width: 2px;
-            background-color: #4A5568;
-        }
-         .timeline-item:last-child::before {
-            display: none;
-        }
-        .timeline-marker {
-            position: absolute;
-            left: -8px;
-            top: 2rem;
-            height: 18px;
-            width: 18px;
-            background-color: #FFC300;
-            border-radius: 50%;
-            border: 3px solid #1a1a2e;
+        @media (max-width: 480px) {
+            .tagline {
+                font-size: 2.5rem;
+            }
+            .brand {
+                font-size: 2.2rem;
+            }
         }
     </style>
 </head>
-<body class="bg-[#1a1a2e] text-gray-200">
-
-    <div class="container mx-auto p-4 md:p-8">
-
-        <header class="text-center mb-12 md:mb-20">
-            <h1 class="text-4xl md:text-6xl font-black text-white mb-4">The Great <span class="text-[#FFC300]">Volume</span> Shake-Up</h1>
-            <p class="text-lg md:text-xl text-gray-400 max-w-3xl mx-auto">An 18-month analysis of Bitcoin's trading volume reveals a market transformed by institutional adoption, halving events, and shifting investor sentiment.</p>
-        </header>
-
-        <main class="space-y-16 md:space-y-24">
-
-            <section id="etf-catalyst" class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
-                <div class="md:col-span-1 text-center md:text-left">
-                    <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">The ETF Catalyst</h2>
-                    <p class="text-gray-400 mb-6">The approval of US Spot Bitcoin ETFs in January 2024 was a monumental event, unleashing a torrent of institutional capital and fundamentally altering market dynamics. This single event was the primary driver behind the most significant volume surge in years.</p>
-                    <div class="bg-[#581845]/50 rounded-lg p-6 text-center">
-                        <p class="text-lg text-[#DAF7A6]">Q1 2024 Spot Volume Growth (QoQ)</p>
-                        <p class="text-7xl font-black text-white">+95.3%</p>
-                    </div>
-                </div>
-                <div class="md:col-span-1 bg-[#2c2c54] p-4 md:p-6 rounded-lg shadow-2xl">
-                    <h3 class="text-xl font-bold text-center text-white mb-4">Quarterly Spot Trading Volume</h3>
-                    <div class="chart-container">
-                        <canvas id="quarterlyVolumeChart"></canvas>
-                    </div>
-                    <p class="text-xs text-gray-500 mt-4 text-center">This chart illustrates the dramatic spike in trading volume in Q1 2024, followed by periods of deceleration and renewed acceleration, highlighting the market's fluctuating intensity.</p>
-                </div>
-            </section>
-
-            <section id="timeline">
-                <h2 class="text-3xl md:text-4xl font-bold text-white mb-10 text-center">A Timeline of Market-Moving Events</h2>
-                <div class="relative max-w-3xl mx-auto">
-                    <div class="space-y-8">
-
-                        <div class="relative pl-8 timeline-item">
-                            <div class="timeline-marker"></div>
-                            <div class="bg-[#2c2c54] p-6 rounded-lg shadow-lg">
-                                <p class="font-bold text-lg text-[#FF5733]">Jan 2024: US Spot Bitcoin ETFs Approved</p>
-                                <p class="text-gray-400">Triggered unprecedented institutional inflows and initiated a period of maximum volume volatility as the market absorbed new, large-scale participants.</p>
-                            </div>
-                        </div>
-
-                        <div class="relative pl-8 timeline-item">
-                            <div class="timeline-marker"></div>
-                             <div class="bg-[#2c2c54] p-6 rounded-lg shadow-lg">
-                                <p class="font-bold text-lg text-[#FFC300]">Apr 2024: The Bitcoin Halving</p>
-                                <p class="text-gray-400">A muted volume response suggested the event was largely priced in, contributing to a market deceleration and a period of lower volume volatility in Q2 2024.</p>
-                            </div>
-                        </div>
-                        
-                        <div class="relative pl-8 timeline-item">
-                            <div class="timeline-marker"></div>
-                             <div class="bg-[#2c2c54] p-6 rounded-lg shadow-lg">
-                                <p class="font-bold text-lg text-[#DAF7A6]">Nov 2024: US Election & Pro-Crypto Stance</p>
-                                <p class="text-gray-400">Donald Trump's win sparked a crypto rally, fueling optimism and a renewed surge in trading volumes and speculative interest in Q4 2024.</p>
-                            </div>
-                        </div>
-
-                        <div class="relative pl-8 timeline-item">
-                            <div class="timeline-marker"></div>
-                            <div class="bg-[#2c2c54] p-6 rounded-lg shadow-lg">
-                                <p class="font-bold text-lg text-[#C70039]">Q2 2025: Market Consolidation</p>
-                                <p class="text-gray-400">A "significant reset" phase began, with defensive investor sentiment leading to lower overall activity and a more predictable, low-volatility environment.</p>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-            </section>
-
-            <section id="volatility-analysis">
-                <h2 class="text-3xl md:text-4xl font-bold text-white mb-10 text-center">Volatility Peaks and Troughs</h2>
-                <p class="text-center text-gray-400 max-w-3xl mx-auto mb-10">The 30-day moving average of volume volatility smooths out daily noise, revealing the true underlying trends in market predictability. The period saw clear, distinct regimes of high and low volume stability.</p>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10">
-                    <div class="bg-[#003f5c] p-6 rounded-lg text-center shadow-2xl">
-                        <p class="text-xl font-bold text-white mb-2">MAXIMUM VOLATILITY</p>
-                        <p class="text-4xl font-black text-[#FF5733]">Q1 2024</p>
-                        <p class="text-gray-300 mt-2">Driven by ETF-related liquidity discovery and intense market adjustment.</p>
-                    </div>
-                    <div class="bg-[#7a5195] p-6 rounded-lg text-center shadow-2xl">
-                        <p class="text-xl font-bold text-white mb-2">LOWEST VOLATILITY</p>
-                        <p class="text-4xl font-black text-[#DAF7A6]">Q2 2024 / Q2 2025</p>
-                        <p class="text-gray-300 mt-2">Characterized by market deceleration and defensive consolidation phases.</p>
-                    </div>
-                </div>
-                <div class="bg-[#2c2c54] p-4 md:p-6 rounded-lg shadow-2xl">
-                    <h3 class="text-xl font-bold text-center text-white mb-4">30-Day Moving Average of Volume Volatility</h3>
-                    <div class="chart-container">
-                        <canvas id="volatilityTrendChart"></canvas>
-                    </div>
-                    <p class="text-xs text-gray-500 mt-4 text-center">This conceptual chart visualizes the trend of volume volatility, showing a dramatic spike post-ETF approval, followed by stabilization and periods of calm.</p>
-                </div>
-            </section>
-
-             <section id="investor-behavior">
-                <h2 class="text-3xl md:text-4xl font-bold text-white mb-10 text-center">A Tale of Two Investors</h2>
-                <p class="text-center text-gray-400 max-w-3xl mx-auto mb-10">The period highlighted a growing divergence between short-term retail sentiment and long-term institutional strategy, profoundly impacting volume dynamics.</p>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
-                    <div class="bg-[#2c2c54] p-4 md:p-6 rounded-lg shadow-2xl flex flex-col items-center">
-                        <h3 class="text-xl font-bold text-white mb-4">Q1 2024: Retail Profit-Taking</h3>
-                        <div class="chart-container w-full max-w-[300px] h-auto aspect-square">
-                            <canvas id="investorChartQ1"></canvas>
-                        </div>
-                        <p class="text-sm text-gray-400 mt-4 text-center max-w-xs">During the initial surge, retail investors were largely taking profits while institutional "whales" began to accumulate.</p>
-                    </div>
-                    <div class="bg-[#2c2c54] p-4 md:p-6 rounded-lg shadow-2xl flex flex-col items-center">
-                        <h3 class="text-xl font-bold text-white mb-4">Q2 2025: Institutional Conviction</h3>
-                        <div class="chart-container w-full max-w-[300px] h-auto aspect-square">
-                            <canvas id="investorChartQ2"></canvas>
-                        </div>
-                        <p class="text-sm text-gray-400 mt-4 text-center max-w-xs">In the consolidation phase, retail interest waned while long-term holders showed renewed conviction, accumulating strategically.</p>
-                    </div>
-                </div>
-            </section>
-        </main>
-
-        <footer class="text-center mt-12 md:mt-24 pt-8 border-t border-gray-700">
-            <p class="text-gray-500">This infographic is a visual summary based on the "Bitcoin Trading Volume Volatility Analysis: January 2024 - June 2025" report. Data points are illustrative based on qualitative and quantitative findings in the source material.
-            </p>
-        </footer>
-
+<body>
+    <div class="container">
+        <div class="coming-soon">Coming Soon</div>
+        <h1 class="tagline">Beyond Buy &amp; Hold</h1>
+        <h2 class="brand">Multisig Capital Partners</h2>
+        <p class="subtitle">A next-generation investment firm focused on active strategies in digital assets and blockchain ecosystems.</p>
     </div>
-
-    <script>
-        const tooltipConfig = {
-            plugins: {
-                tooltip: {
-                    callbacks: {
-                        title: function(tooltipItems) {
-                            const item = tooltipItems[0];
-                            let label = item.chart.data.labels[item.dataIndex];
-                            if (Array.isArray(label)) {
-                                return label.join(' ');
-                            }
-                            return label;
-                        }
-                    }
-                }
-            }
-        };
-
-        const wrapLabel = (label) => {
-            const maxLength = 16;
-            if (label.length <= maxLength) return label;
-            const words = label.split(' ');
-            let lines = [];
-            let currentLine = '';
-            words.forEach(word => {
-                if ((currentLine + ' ' + word).trim().length > maxLength) {
-                    lines.push(currentLine.trim());
-                    currentLine = word;
-                } else {
-                    currentLine = (currentLine + ' ' + word).trim();
-                }
-            });
-            lines.push(currentLine.trim());
-            return lines;
-        };
-
-        const quarterlyVolumeData = {
-            labels: ['Q4 2023', 'Q1 2024', 'Q2 2024', 'Q3 2024', 'Q4 2024', 'Q1 2025', 'Q2 2025'],
-            datasets: [{
-                label: 'Spot Trading Volume ($ Trillion)',
-                data: [2.2, 4.29, 3.40, 3.96, 4.5, 3.27, 2.5],
-                backgroundColor: '#FF5733',
-                borderColor: '#FFC300',
-                borderWidth: 2,
-                borderRadius: 5,
-            }]
-        };
-
-        new Chart(document.getElementById('quarterlyVolumeChart'), {
-            type: 'bar',
-            data: quarterlyVolumeData,
-            options: {
-                ...tooltipConfig,
-                responsive: true,
-                maintainAspectRatio: false,
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        title: { display: true, text: 'Volume in Trillions (USD)', color: '#9CA3AF' },
-                        grid: { color: 'rgba(255, 255, 255, 0.1)' },
-                        ticks: { color: '#D1D5DB' }
-                    },
-                    x: {
-                        grid: { display: false },
-                        ticks: { color: '#D1D5DB' }
-                    }
-                },
-                plugins: {
-                     ...tooltipConfig.plugins,
-                    legend: { display: false }
-                }
-            }
-        });
-
-        const volatilityTrendData = {
-            labels: ['Dec', 'Jan \'24', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan \'25', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
-            datasets: [{
-                label: '30-Day MA of Volume Volatility',
-                data: [15, 85, 75, 40, 25, 20, 30, 28, 35, 33, 45, 60, 50, 40, 35, 30, 25, 22, 20],
-                fill: true,
-                backgroundColor: 'rgba(255, 87, 51, 0.2)',
-                borderColor: '#FF5733',
-                tension: 0.4,
-                pointRadius: 0
-            }]
-        };
-
-        new Chart(document.getElementById('volatilityTrendChart'), {
-            type: 'line',
-            data: volatilityTrendData,
-            options: {
-                 ...tooltipConfig,
-                responsive: true,
-                maintainAspectRatio: false,
-                scales: {
-                     y: {
-                        title: { display: true, text: 'Volatility Index', color: '#9CA3AF' },
-                        grid: { color: 'rgba(255, 255, 255, 0.1)' },
-                        ticks: { color: '#D1D5DB' }
-                    },
-                    x: {
-                        grid: { display: false },
-                        ticks: { color: '#D1D5DB' }
-                    }
-                },
-                plugins: {
-                     ...tooltipConfig.plugins,
-                    legend: { display: false }
-                }
-            }
-        });
-
-        const investorDataQ1 = {
-            labels: ['Retail Profit-Taking', 'Institutional Accumulation'],
-            datasets: [{
-                data: [70, 30],
-                backgroundColor: ['#C70039', '#581845'],
-                borderColor: '#2c2c54',
-                borderWidth: 4,
-            }]
-        };
-
-        new Chart(document.getElementById('investorChartQ1'), {
-            type: 'doughnut',
-            data: investorDataQ1,
-            options: {
-                ...tooltipConfig,
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                     ...tooltipConfig.plugins,
-                    legend: {
-                        position: 'bottom',
-                        labels: {
-                           color: '#D1D5DB'
-                        }
-                    }
-                }
-            }
-        });
-        
-        const investorDataQ2 = {
-            labels: ['Cautious Retail Interest', 'Strategic Long-Term Holding'],
-            datasets: [{
-                data: [25, 75],
-                backgroundColor: ['#900C3F', '#DAF7A6'],
-                borderColor: '#2c2c54',
-                borderWidth: 4,
-            }]
-        };
-
-        new Chart(document.getElementById('investorChartQ2'), {
-            type: 'doughnut',
-            data: investorDataQ2,
-            options: {
-                ...tooltipConfig,
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                     ...tooltipConfig.plugins,
-                    legend: {
-                        position: 'bottom',
-                        labels: {
-                           color: '#D1D5DB'
-                        }
-                    }
-                }
-            }
-        });
-
-    </script>
 </body>
 </html>
