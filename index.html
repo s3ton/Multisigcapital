@@ -3,10 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Multisig Capital Partners</title>
-    <meta name="description" content="Multisig Capital Partners - Beyond Buy & Hold">
-    <!-- Google Fonts for a modern, professional look -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700;900&display=swap" rel="stylesheet">
+    <meta name="description" content="Multisig Capital Partners - A next-generation investment firm focused on active strategies in digital assets and blockchain ecosystems.">
+    <title>Multisig Capital Partners | Beyond Buy & Hold</title>
+    
+    <!-- Google Fonts: Inter for clean, professional typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome for social icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
     <style>
         * {
             margin: 0;
@@ -15,69 +20,138 @@
         }
         body {
             font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #0f0f1f 0%, #1a1a2e 100%); /* Dark professional gradient */
+            background: linear-gradient(135deg, #0a0a1a 0%, #1c1c3a 50%, #0f0f2e 100%);
+            background-attachment: fixed;
             color: #ffffff;
             min-height: 100vh;
             display: flex;
-            align-items: center;
-            justify-content: center;
+            flex-direction: column;
+            justify-content: space-between;
             text-align: center;
-            padding: 2rem;
+            padding: 4rem 2rem;
+            overflow-x: hidden;
         }
         .container {
-            max-width: 1200px;
-            width: 100%;
+            max-width: 1100px;
+            margin: 0 auto;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
         .coming-soon {
-            font-size: 1.5rem;
+            font-size: 1.4rem;
             font-weight: 300;
-            letter-spacing: 0.3em;
+            letter-spacing: 0.4em;
             text-transform: uppercase;
-            opacity: 0.8;
-            margin-bottom: 2rem;
+            opacity: 0.7;
+            margin-bottom: 3rem;
+            animation: fadeIn 1.5s ease-out;
         }
         .tagline {
-            font-size: 4.5rem;
+            font-size: 5.5rem;
             font-weight: 900;
-            line-height: 1.2;
-            margin-bottom: 1rem;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(90deg, #ffffff, #a0d8ff);
+            -webkit-background-clip: text;
+            -webkit-txt-fill-color: transparent;
+            animation: fadeIn 2s ease-out 0.5s both;
         }
         .brand {
-            font-size: 3.5rem;
-            font-weight: 700;
+            font-size: 4rem;
+            font-weight: 800;
             letter-spacing: 0.05em;
+            margin-bottom: 2rem;
+            animation: fadeIn 2s ease-out 1s both;
         }
         .subtitle {
-            font-size: 1.3rem;
+            font-size: 1.4rem;
             font-weight: 300;
             max-width: 800px;
-            margin: 3rem auto 0;
+            margin: 0 auto 4rem;
             opacity: 0.9;
+            line-height: 1.6;
+            animation: fadeIn 2s ease-out 1.5s both;
+        }
+        .cta {
+            margin: 3rem 0;
+            animation: fadeIn 2s ease-out 2s both;
+        }
+        .email-form {
+            max-width: 500px;
+            margin: 0 auto 4rem;
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .email-form input {
+            padding: 1rem 1.5rem;
+            font-size: 1.1rem;
+            border: none;
+            border-radius: 8px;
+            flex: 1;
+            min-width: 280px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            backdrop-filter: blur(10px);
+        }
+        .email-form input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+        .email-form button {
+            padding: 1rem 2.5rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            background: #ffffff;
+            color: #0f0f1f;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        .email-form button:hover {
+            transform: translateY(-3px);
+        }
+        .social-links {
+            margin-top: 4rem;
+            animation: fadeIn 2s ease-out 2.5s both;
+        }
+        .social-links a {
+            color: #ffffff;
+            font-size: 1.8rem;
+            margin: 0 1rem;
+            opacity: 0.7;
+            transition: opacity 0.3s ease;
+        }
+        .social-links a:hover {
+            opacity: 1;
+        }
+        footer {
+            font-size: 0.9rem;
+            opacity: 0.6;
+            padding: 2rem 0;
         }
 
-        /* Responsive adjustments */
+        /* Fade-in animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Responsive */
         @media (max-width: 768px) {
-            .coming-soon {
-                font-size: 1.2rem;
-                margin-bottom: 1.5rem;
-            }
-            .tagline {
-                font-size: 3rem;
-            }
-            .brand {
-                font-size: 2.5rem;
-            }
-            .subtitle {
-                font-size: 1.1rem;
-            }
+            .coming-soon { font-size: 1.1rem; letter-spacing: 0.3em; }
+            .tagline { font-size: 3.8rem; }
+            .brand { font-size: 3rem; }
+            .subtitle { font-size: 1.2rem; }
+            .email-form { flex-direction: column; align-items: center; }
+            .email-form button { width: 280px; }
         }
         @media (max-width: 480px) {
-            .tagline {
-                font-size: 2.5rem;
-            }
-            .brand {
-                font-size: 2.2rem;
-            }
+            .tagline { font-size: 3rem; }
+            .brand { font-size: 2.5rem; }
         }
     </style>
 </head>
@@ -87,6 +161,25 @@
         <h1 class="tagline">Beyond Buy &amp; Hold</h1>
         <h2 class="brand">Multisig Capital Partners</h2>
         <p class="subtitle">A next-generation investment firm focused on active strategies in digital assets and blockchain ecosystems.</p>
+        
+        <div class="cta">
+            <p>Join our mailing list for updates</p>
+            <form class="email-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+                <input type="email" name="email" placeholder="Enter your email" required>
+                <button type="submit">Subscribe</button>
+            </form>
+        </div>
+        
+        <div class="social-links">
+            <a href="https://twitter.com/yourhandle" target="_blank" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+            <a href="https://linkedin.com/company/yourcompany" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+            <a href="https://github.com/yourorg" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
+            <!-- Add more as needed -->
+        </div>
     </div>
+    
+    <footer>
+        &copy; 2026 Multisig Capital Partners. All rights reserved.
+    </footer>
 </body>
 </html>
