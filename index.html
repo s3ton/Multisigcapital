@@ -4,264 +4,729 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="Multisig Capital Partners develops active benchmark-oriented strategies for Bitcoin, gold, and pension-efficient ETP products.">
-<title>Multisig Capital Partners | Beyond Buy & Hold</title>
+<title>Multisig Capital Partners | Beyond Buy &amp; Hold</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<!-- Theme initialization to prevent FOUC -->
+<script>
+  (function() {
+    const savedTheme = localStorage.getItem('theme');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+      document.documentElement.setAttribute('data-theme', 'dark');
+    } else {
+      document.documentElement.setAttribute('data-theme', 'light');
+    }
+  })();
+</script>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 
 <style>
-* { margin:0; padding:0; box-sizing:border-box; }
 
-body {
-    font-family:'Inter', sans-serif;
-    background:#ffffff;
-    color:#111827;
-    line-height:1.65;
+/* ============================================================
+   TOKENS (Light Mode Default)
+   ============================================================ */
+:root {
+  --bg-primary: #FFFFFF;
+  --bg-secondary: #F8FAFC;
+  --bg-tertiary: #F1F5F9;
+  --text-title: #111827;
+  --text-primary: #1F2937;
+  --text-secondary: #4B5563;
+  --accent: #B8982A;
+  --accent-light: #9C7F1F;
+  --nav-bg: rgba(255, 255, 255, 0.90);
+  --header-border: rgba(184, 152, 42, 0.3);
+  --border-color: rgba(184, 152, 42, 0.2);
+  --card-bg: #FFFFFF;
+  --card-hover-shadow: rgba(0, 0, 0, 0.1);
+  --hero-overlay: linear-gradient(160deg, rgba(255, 255, 255, 0.88) 0%, rgba(248, 250, 252, 0.8) 60%, rgba(255, 255, 255, 0.85) 100%);
+  --hero-scroll: #9C7F1F;
+  --footer-bg: #F8FAFC;
+  --logo-color: #111827;
+  --theme-toggle-hover: rgba(0, 0, 0, 0.05);
 }
 
-/* NAVIGATION */
+/* ============================================================
+   TOKENS (Dark Mode)
+   ============================================================ */
+[data-theme="dark"] {
+  --bg-primary: #0B1120;
+  --bg-secondary: #111D35;
+  --bg-tertiary: #1E2738;
+  --text-title: #FFFFFF;
+  --text-primary: #F0F4FF;
+  --text-secondary: #8A9BBE;
+  --accent: #B8982A;
+  --accent-light: #D4AF55;
+  --nav-bg: rgba(11, 17, 32, 0.90);
+  --header-border: rgba(184, 152, 42, 0.25);
+  --border-color: rgba(184, 152, 42, 0.12);
+  --card-bg: var(--bg-tertiary);
+  --card-hover-shadow: rgba(0, 0, 0, 0.5);
+  --hero-overlay: linear-gradient(160deg, rgba(11, 17, 32, 0.93) 0%, rgba(17, 29, 53, 0.82) 60%, rgba(11, 17, 32, 0.88) 100%);
+  --hero-scroll: #D4AF55;
+  --footer-bg: #070C18;
+  --logo-color: #FFFFFF;
+  --theme-toggle-hover: rgba(255, 255, 255, 0.1);
+}
 
+/* ============================================================
+   RESET & BASE
+   ============================================================ */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.7;
+  font-weight: 300;
+  -webkit-font-smoothing: antialiased;
+  transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+/* ============================================================
+   NAVIGATION
+   ============================================================ */
 nav {
-    width:100%;
-    padding:1.2rem 1.5rem;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    border-bottom:1px solid #e5e7eb;
-    background:#ffffff;
-    position:sticky;
-    top:0;
-    z-index:1000;
+  width: 100%;
+  padding: 1.4rem 3rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--nav-bg);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--header-border);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  transition: background-color 0.4s ease, border-color 0.4s ease;
 }
 
 .logo {
-    font-weight:700;
-    font-size:0.95rem;
-    letter-spacing:0.05em;
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: var(--logo-color);
+  letter-spacing: 0.04em;
+  transition: color 0.4s ease;
 }
 
-nav a {
-    text-decoration:none;
-    color:#374151;
-    margin-left:1.5rem;
-    font-weight:500;
-    font-size:0.85rem;
+.nav-right-area {
+  display: flex;
+  align-items: center;
+  gap: 2.2rem;
 }
 
-nav a:hover {
-    color:#000;
+.nav-links {
+  display: flex;
+  gap: 2.2rem;
 }
 
-/* HERO */
+.nav-links a {
+  text-decoration: none;
+  color: var(--text-primary);
+  font-weight: 400;
+  font-size: 0.82rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.75;
+  transition: color 0.25s ease, opacity 0.25s ease;
+}
 
+.nav-links a:hover {
+  color: var(--accent-light);
+  opacity: 1;
+}
+
+/* THEME TOGGLE */
+.theme-toggle {
+  background: transparent;
+  border: none;
+  color: var(--text-primary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  transition: background-color 0.2s ease, color 0.4s ease;
+}
+
+.theme-toggle:hover {
+  background-color: var(--theme-toggle-hover);
+}
+
+.theme-toggle svg {
+  width: 20px;
+  height: 20px;
+  stroke: currentColor;
+}
+
+/* Hide sun in dark mode, hide moon in light mode */
+[data-theme="light"] .theme-toggle .icon-sun { display: none; }
+[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
+
+/* ============================================================
+   HERO
+   ============================================================ */
 .hero {
-    padding:4.5rem 1.5rem 3.5rem;
-    max-width:900px;
-    margin:auto;
-    text-align:center;
+  position: relative;
+  width: 100%;
+  min-height: 92vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 10rem 2rem 7rem;
+  overflow: hidden;
+}
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  background-image: url('assets/hero-bg.jpg');
+  background-size: cover;
+  background-position: center 30%;
+  background-repeat: no-repeat;
+  transform: scale(1.04);
+  transition: transform 8s ease;
+  z-index: 0;
+}
+
+.hero:hover .hero-bg {
+  transform: scale(1.08);
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: var(--hero-overlay);
+  transition: background 0.4s ease;
+  z-index: 1;
+}
+
+.hero-inner {
+  position: relative;
+  z-index: 2;
+  max-width: 860px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: fadeInUp 1s ease both;
 }
 
 .motto {
-    text-transform:uppercase;
-    letter-spacing:0.3em;
-    font-size:0.75rem;
-    font-weight:600;
-    color:#6b7280;
-    margin-bottom:1.2rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.35em;
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: var(--accent-light);
+  margin-bottom: 1.8rem;
+  transition: color 0.4s ease;
+}
+
+.motto::before,
+.motto::after {
+  content: '';
+  display: block;
+  width: 32px;
+  height: 1px;
+  background: var(--accent-light);
+  opacity: 0.7;
+  transition: background-color 0.4s ease;
 }
 
 .hero h1 {
-    font-size:1.85rem;
-    font-weight:700;
-    margin-bottom:1.3rem;
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  font-size: clamp(2rem, 4vw, 3.4rem);
+  color: var(--text-title);
+  line-height: 1.18;
+  margin-bottom: 1.6rem;
+  letter-spacing: -0.01em;
+  transition: color 0.4s ease;
 }
 
 .hero p {
-    font-size:1rem;
-    color:#4b5563;
-    max-width:680px;
-    margin:0 auto 2rem;
+  font-size: clamp(0.95rem, 1.5vw, 1.1rem);
+  color: var(--text-primary);
+  opacity: 0.82;
+  max-width: 620px;
+  margin: 0 auto 2.8rem;
+  font-weight: 300;
+  line-height: 1.8;
+  transition: color 0.4s ease;
 }
 
+/* ============================================================
+   BUTTONS
+   ============================================================ */
 .button {
-    display:inline-block;
-    padding:0.85rem 1.6rem;
-    background:#111827;
-    color:#fff;
-    border-radius:6px;
-    text-decoration:none;
-    font-weight:600;
-    font-size:0.85rem;
-    transition:0.2s ease;
+  display: inline-block;
+  padding: 0.9rem 2.2rem;
+  border: 1.5px solid var(--accent-light);
+  background: transparent;
+  color: var(--accent-light);
+  border-radius: 2px;
+  text-decoration: none;
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 0.8rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
 }
 
 .button:hover {
-    opacity:0.85;
+  background: var(--accent-light);
+  color: var(--bg-primary); /* Use primary bg so text is visible (white in light mode, navy in dark mode) */
+  box-shadow: 0 4px 24px rgba(184, 152, 42, 0.25);
 }
 
-/* SECTIONS */
-
-.section {
-    padding:3.5rem 1.5rem;
-    max-width:1100px;
-    margin:auto;
+/* ============================================================
+   SCROLL HINT
+   ============================================================ */
+.scroll-hint {
+  position: absolute;
+  bottom: 2.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  opacity: 0.45;
+  animation: bounce 2.4s ease infinite;
 }
 
-.section h2 {
-    font-size:1.5rem;
-    margin-bottom:2rem;
-    text-align:center;
+.scroll-hint span {
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-primary);
+  transition: color 0.4s ease;
 }
 
+.scroll-hint svg {
+  stroke: var(--hero-scroll);
+  transition: stroke 0.4s ease;
+}
+
+/* ============================================================
+   SECTION WRAPPER
+   ============================================================ */
+.section-dark {
+  width: 100%;
+  padding: 6rem 2rem;
+  transition: background-color 0.4s ease;
+}
+
+.section-dark--alt {
+  background: var(--bg-secondary);
+}
+
+.section-dark--approach {
+  background: var(--bg-primary);
+}
+
+.section-dark--contact {
+  background: var(--bg-tertiary);
+  border-top: 1px solid var(--border-color);
+  transition: background-color 0.4s ease, border-color 0.4s ease;
+}
+
+.section-inner {
+  max-width: 1120px;
+  margin: 0 auto;
+}
+
+/* ============================================================
+   SECTION HEADINGS
+   ============================================================ */
+.section-label {
+  display: block;
+  width: 44px;
+  height: 2px;
+  background: var(--accent);
+  margin: 0 auto 1.4rem;
+  border-radius: 1px;
+}
+
+.section-inner h2 {
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  color: var(--text-title);
+  text-align: center;
+  margin-bottom: 1rem;
+  letter-spacing: -0.01em;
+  transition: color 0.4s ease;
+}
+
+.section-inner .section-sub {
+  text-align: center;
+  color: var(--text-secondary);
+  font-size: 0.82rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: 3.5rem;
+  font-weight: 400;
+  transition: color 0.4s ease;
+}
+
+/* ============================================================
+   STRATEGY CARDS
+   ============================================================ */
 .grid {
-    display:grid;
-    gap:1.8rem;
+  display: grid;
+  gap: 2rem;
+  margin-top: 3.5rem;
 }
 
 .card {
-    padding:1.6rem;
-    border:1px solid #e5e7eb;
-    border-radius:8px;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-top: 2px solid var(--accent);
+  border-radius: 3px;
+  padding: 2.2rem 2rem 2rem;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease, background-color 0.4s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 16px 48px var(--card-hover-shadow);
+  border-top-color: var(--accent-light);
+}
+
+.card-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  margin-bottom: 1.4rem;
+  background: rgba(184, 152, 42, 0.08);
+  border-radius: 2px;
+}
+
+.card-icon svg {
+  stroke: var(--accent);
 }
 
 .card h3 {
-    margin-bottom:0.8rem;
-    font-size:1rem;
+  font-family: 'Playfair Display', serif;
+  font-weight: 600;
+  font-size: 1.15rem;
+  color: var(--text-title);
+  margin-bottom: 0.85rem;
+  line-height: 1.3;
+  transition: color 0.4s ease;
 }
 
 .card p {
-    color:#4b5563;
-    font-size:0.9rem;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  line-height: 1.75;
+  font-weight: 300;
+  transition: color 0.4s ease;
 }
 
-/* FOOTER */
+/* ============================================================
+   APPROACH & CONTACT
+   ============================================================ */
+.approach-text {
+  text-align: center;
+  max-width: 760px;
+  margin: 0 auto;
+  color: var(--text-primary);
+  font-size: 1rem;
+  line-height: 1.85;
+  opacity: 0.82;
+  font-weight: 300;
+  transition: color 0.4s ease;
+}
 
+.contact-intro {
+  text-align: center;
+  color: var(--text-secondary);
+  font-size: 0.92rem;
+  margin-bottom: 2rem;
+  transition: color 0.4s ease;
+}
+
+.contact-center {
+  text-align: center;
+}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
 footer {
-    margin-top:4rem;
-    padding:3rem 1.5rem;
-    background:#111827;
-    color:#9ca3af;
-    text-align:center;
-    font-size:0.75rem;
+  background: var(--footer-bg);
+  border-top: 1px solid var(--border-color);
+  padding: 3.5rem 2rem;
+  text-align: center;
+  transition: background-color 0.4s ease, border-color 0.4s ease;
+}
+
+.footer-logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  letter-spacing: 0.08em;
+  margin-bottom: 1.8rem;
+  font-weight: 600;
+  transition: color 0.4s ease;
 }
 
 footer p {
-    max-width:900px;
-    margin:0 auto 1rem;
+  max-width: 760px;
+  margin: 0 auto 0.9rem;
+  color: var(--text-secondary);
+  font-size: 0.73rem;
+  font-weight: 300;
+  line-height: 1.7;
+  transition: color 0.4s ease;
 }
 
-/* DESKTOP */
-
-@media(min-width:768px){
-
-.hero {
-    padding:7rem 2rem 5rem;
+footer p:last-child {
+  opacity: 0.65;
+  font-size: 0.7rem;
 }
 
-.motto {
-    font-size:0.8rem;
+/* ============================================================
+   ANIMATIONS & RESPONSIVE
+   ============================================================ */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(26px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-.hero h1 {
-    font-size:2.6rem;
+@keyframes bounce {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50%       { transform: translateX(-50%) translateY(6px); }
 }
 
-.hero p {
-    font-size:1.1rem;
+.fade-in {
+  opacity: 0;
+  animation: fadeInUp 0.7s ease forwards;
 }
 
-.section {
-    padding:5rem 2rem;
+.fade-in:nth-child(1) { animation-delay: 0.1s; }
+.fade-in:nth-child(2) { animation-delay: 0.25s; }
+.fade-in:nth-child(3) { animation-delay: 0.4s; }
+
+@media (min-width: 768px) {
+  nav { padding: 1.4rem 4rem; }
+  .grid { grid-template-columns: repeat(3, 1fr); }
+  .section-dark { padding: 7rem 4rem; }
 }
 
-.section h2 {
-    font-size:1.8rem;
+@media (max-width: 600px) {
+  .nav-right-area { gap: 1.2rem; }
+  .nav-links { gap: 1rem; }
+  .nav-links a { font-size: 0.75rem; }
+  .hero { padding: 8rem 1.5rem 6rem; min-height: 80vh; }
 }
 
-.grid {
-    grid-template-columns:repeat(3, 1fr);
-}
-
-}
 </style>
 </head>
 
 <body>
 
+<!-- ============================================================
+     NAVIGATION
+     ============================================================ -->
 <nav>
-    <div class="logo">Multisig Capital Partners</div>
-    <div>
-        <a href="#strategies">Strategies</a>
-        <a href="#approach">Approach</a>
-        <a href="#contact">Contact</a>
+  <div class="logo">Multisig Capital Partners</div>
+  <div class="nav-right-area">
+    <div class="nav-links">
+      <a href="#strategies">Strategies</a>
+      <a href="#approach">Approach</a>
+      <a href="#contact">Contact</a>
     </div>
+    
+    <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">
+      <!-- Sun icon for dark mode (to switch to light) -->
+      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="5"></circle>
+        <line x1="12" y1="1" x2="12" y2="3"></line>
+        <line x1="12" y1="21" x2="12" y2="23"></line>
+        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+        <line x1="1" y1="12" x2="3" y2="12"></line>
+        <line x1="21" y1="12" x2="23" y2="12"></line>
+        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+      </svg>
+      <!-- Moon icon for light mode (to switch to dark) -->
+      <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+      </svg>
+    </button>
+  </div>
 </nav>
 
+<!-- ============================================================
+     HERO
+     ============================================================ -->
 <section class="hero">
-    <div class="motto">Beyond Buy & Hold</div>
+  <div class="hero-bg" aria-hidden="true"></div>
+  <div class="hero-overlay" aria-hidden="true"></div>
+
+  <div class="hero-inner">
+    <div class="motto">Beyond Buy &amp; Hold</div>
     <h1>Benchmark-Oriented Strategies for Modern Portfolio Construction</h1>
     <p>
-        Multisig Capital Partners develops systematic strategies designed to outperform
-        traditional benchmarks across Bitcoin and gold exposures. 
-        Our framework integrates leverage overlays, decorrelated allocation,
-        and volatility harvesting to enhance returns while mitigating drawdowns.
+      Multisig Capital Partners develops systematic strategies designed to outperform
+      traditional benchmarks across Bitcoin and gold exposures.
+      Our framework integrates leverage overlays, decorrelated allocation,
+      and volatility harvesting to enhance returns while mitigating drawdowns.
     </p>
     <a href="#contact" class="button">Institutional Inquiries</a>
+  </div>
+
+  <div class="scroll-hint" aria-hidden="true">
+    <span>Scroll</span>
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="6 9 12 15 18 9"></polyline>
+    </svg>
+  </div>
 </section>
 
-<section id="strategies" class="section">
+<!-- ============================================================
+     STRATEGIES
+     ============================================================ -->
+<div class="section-dark section-dark--alt" id="strategies">
+  <div class="section-inner">
+    <span class="section-label" aria-hidden="true"></span>
     <h2>Strategy Focus</h2>
+
     <div class="grid">
-        <div class="card">
-            <h3>Bitcoin & Gold Allocations</h3>
-            <p>
-                Tactical exposure frameworks combining digital and hard-asset stores of value,
-                structured to improve risk-adjusted returns relative to passive benchmarks.
-            </p>
+
+      <div class="card fade-in">
+        <div class="card-icon" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
+            <polyline points="17 6 23 6 23 12"></polyline>
+          </svg>
         </div>
-        <div class="card">
-            <h3>Leverage & Overlay Strategies</h3>
-            <p>
-                Systematic leverage application and derivative overlays designed
-                to amplify structural return drivers while maintaining disciplined risk controls.
-            </p>
+        <h3>Bitcoin &amp; Gold Allocations</h3>
+        <p>
+          Tactical exposure frameworks combining digital and hard-asset stores of value,
+          structured to improve risk-adjusted returns relative to passive benchmarks.
+        </p>
+      </div>
+
+      <div class="card fade-in">
+        <div class="card-icon" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+            <line x1="8" y1="21" x2="16" y2="21"></line>
+            <line x1="12" y1="17" x2="12" y2="21"></line>
+          </svg>
         </div>
-        <div class="card">
-            <h3>Volatility Harvesting</h3>
-            <p>
-                Exploiting decorrelation dynamics and market inefficiencies
-                to reduce drawdowns and enhance compounding efficiency.
-            </p>
+        <h3>Leverage &amp; Overlay Strategies</h3>
+        <p>
+          Systematic leverage application and derivative overlays designed
+          to amplify structural return drivers while maintaining disciplined risk controls.
+        </p>
+      </div>
+
+      <div class="card fade-in">
+        <div class="card-icon" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+          </svg>
         </div>
+        <h3>Volatility Harvesting</h3>
+        <p>
+          Exploiting decorrelation dynamics and market inefficiencies
+          to reduce drawdowns and enhance compounding efficiency.
+        </p>
+      </div>
+
     </div>
-</section>
+  </div>
+</div>
 
-<section id="approach" class="section">
+<!-- ============================================================
+     APPROACH
+     ============================================================ -->
+<div class="section-dark section-dark--approach" id="approach">
+  <div class="section-inner">
+    <span class="section-label" aria-hidden="true"></span>
     <h2>Pension-Efficient Product Design</h2>
-    <p style="text-align:center; max-width:800px; margin:auto; color:#4b5563;">
-        Our research emphasizes capital efficiency and structural robustness,
-        supporting the development of exchange-traded products suitable for long-term
-        allocation mandates, including retirement and pension frameworks.
+    <p class="approach-text">
+      Our research emphasizes capital efficiency and structural robustness,
+      supporting the development of exchange-traded products suitable for long-term
+      allocation mandates, including retirement and pension frameworks.
     </p>
-</section>
+  </div>
+</div>
 
-<section id="contact" class="section" style="text-align:center;">
+<!-- ============================================================
+     CONTACT
+     ============================================================ -->
+<div class="section-dark section-dark--contact" id="contact">
+  <div class="section-inner contact-center">
+    <span class="section-label" aria-hidden="true"></span>
     <h2>Contact</h2>
-    <p style="color:#4b5563; margin-bottom:1.5rem;">
-        For partnership discussions, licensing, and institutional inquiries:
+    <p class="contact-intro">
+      For partnership discussions, licensing, and institutional inquiries:
     </p>
     <a href="mailto:info@multisigcapital.com" class="button">
-        info@multisigcapital.com
+      info@multisigcapital.com
     </a>
-</section>
+  </div>
+</div>
 
+<!-- ============================================================
+     FOOTER
+     ============================================================ -->
 <footer>
-    <p>© 2026 Multisig Capital Partners. All rights reserved.</p>
-    <p>
-        This website is provided for informational purposes only and does not constitute
-        investment advice, an offer to sell, or a solicitation of an offer to buy any security
-        or financial instrument.
-    </p>
+  <div class="footer-logo">Multisig Capital Partners</div>
+  <p>© 2026 Multisig Capital Partners. All rights reserved.</p>
+  <p>
+    This website is provided for informational purposes only and does not constitute
+    investment advice, an offer to sell, or a solicitation of an offer to buy any security
+    or financial instrument.
+  </p>
 </footer>
+
+<!-- ============================================================
+     SCRIPTS
+     ============================================================ -->
+<script>
+  const themeToggle = document.getElementById('theme-toggle');
+  
+  themeToggle.addEventListener('click', () => {
+    const currentTheme = document.documentElement.getAttribute('data-theme');
+    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    
+    document.documentElement.setAttribute('data-theme', newTheme);
+    localStorage.setItem('theme', newTheme);
+  });
+</script>
 
 </body>
 </html>
