@@ -180,6 +180,81 @@ nav {
 [data-theme="light"] .theme-toggle .icon-sun { display: none; }
 [data-theme="dark"] .theme-toggle .icon-moon { display: none; }
 
+/* MOBILE NAV TOGGLE */
+.mobile-nav-toggle {
+  display: none;
+  background: transparent;
+  border: none;
+  color: var(--text-primary);
+  cursor: pointer;
+  padding: 0.4rem;
+  position: relative;
+  z-index: 1001;
+  transition: color 0.4s ease;
+}
+
+.mobile-nav-toggle svg {
+  width: 24px;
+  height: 24px;
+  stroke: currentColor;
+}
+
+.mobile-nav-toggle .line-top,
+.mobile-nav-toggle .line-mid,
+.mobile-nav-toggle .line-bot {
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
+  transform-origin: center;
+}
+
+.mobile-nav-toggle.active .line-mid { opacity: 0; }
+.mobile-nav-toggle.active .line-top { transform: translateY(6px) rotate(45deg); }
+.mobile-nav-toggle.active .line-bot { transform: translateY(-6px) rotate(-45deg); }
+
+/* MOBILE DROPDOWN */
+.mobile-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: var(--nav-bg);
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+  border-bottom: 2px solid var(--accent);
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
+  gap: 1.8rem;
+  z-index: 999;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-20px);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.mobile-dropdown.active {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.mobile-dropdown a {
+  text-decoration: none;
+  color: var(--text-primary);
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  opacity: 0.8;
+  transition: color 0.25s ease, opacity 0.25s ease, transform 0.25s ease;
+}
+
+.mobile-dropdown a:hover {
+  color: var(--accent);
+  opacity: 1;
+  transform: translateX(5px);
+}
+
 /* ============================================================
    HERO
    ============================================================ */
@@ -542,9 +617,28 @@ footer p:last-child {
 }
 
 @media (max-width: 600px) {
-  .nav-right-area { gap: 1.2rem; }
-  .nav-links { gap: 1rem; }
-  .nav-links a { font-size: 0.75rem; }
+  nav {
+    padding: 1.1rem 1.4rem;
+  }
+
+  .logo {
+    white-space: nowrap;
+    flex-shrink: 0;
+    font-size: 0.95rem;
+  }
+
+  .nav-links {
+    display: none; /* Hide on mobile */
+  }
+
+  .nav-right-area {
+    gap: 0.8rem;
+  }
+
+  .mobile-nav-toggle {
+    display: block;
+  }
+
   .hero { padding: 8rem 1.5rem 6rem; min-height: 80vh; }
 }
 
@@ -583,6 +677,22 @@ footer p:last-child {
         <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
       </svg>
     </button>
+
+    <!-- Mobile Nav Toggle -->
+    <button id="mobile-nav-toggle" class="mobile-nav-toggle" aria-label="Toggle menu">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="3" y1="6" x2="21" y2="6" class="line-top"></line>
+        <line x1="3" y1="12" x2="21" y2="12" class="line-mid"></line>
+        <line x1="3" y1="18" x2="21" y2="18" class="line-bot"></line>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Mobile Dropdown -->
+  <div id="mobile-dropdown" class="mobile-dropdown">
+    <a href="#strategies">Strategies</a>
+    <a href="#approach">Approach</a>
+    <a href="#contact">Contact</a>
   </div>
 </nav>
 
@@ -726,6 +836,33 @@ footer p:last-child {
     document.documentElement.setAttribute('data-theme', newTheme);
     localStorage.setItem('theme', newTheme);
   });
+
+  // Mobile Menu Toggle
+  const mobileToggle = document.getElementById('mobile-nav-toggle');
+  const mobileDropdown = document.getElementById('mobile-dropdown');
+  
+  if (mobileToggle && mobileDropdown) {
+    mobileToggle.addEventListener('click', () => {
+      mobileToggle.classList.toggle('active');
+      mobileDropdown.classList.toggle('active');
+    });
+
+    // Close menu when clicking a link
+    mobileDropdown.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        mobileToggle.classList.remove('active');
+        mobileDropdown.classList.remove('active');
+      });
+    });
+
+    // Close menu when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!mobileToggle.contains(e.target) && !mobileDropdown.contains(e.target)) {
+        mobileToggle.classList.remove('active');
+        mobileDropdown.classList.remove('active');
+      }
+    });
+  }
 </script>
 
 </body>
