@@ -40,6 +40,7 @@
   --border-color: rgba(184, 152, 42, 0.2);
   --card-bg: #FFFFFF;
   --card-hover-shadow: rgba(0, 0, 0, 0.1);
+  --hero-image: url('assets/hero-bg-light.jpg');
   --hero-overlay: linear-gradient(160deg, rgba(255, 255, 255, 0.88) 0%, rgba(248, 250, 252, 0.8) 60%, rgba(255, 255, 255, 0.85) 100%);
   --hero-scroll: #9C7F1F;
   --footer-bg: #F8FAFC;
@@ -64,6 +65,7 @@
   --border-color: rgba(184, 152, 42, 0.12);
   --card-bg: var(--bg-tertiary);
   --card-hover-shadow: rgba(0, 0, 0, 0.5);
+  --hero-image: url('assets/hero-bg.jpg');
   --hero-overlay: linear-gradient(160deg, rgba(11, 17, 32, 0.93) 0%, rgba(17, 29, 53, 0.82) 60%, rgba(11, 17, 32, 0.88) 100%);
   --hero-scroll: #D4AF55;
   --footer-bg: #070C18;
@@ -274,7 +276,7 @@ nav {
 .hero-bg {
   position: absolute;
   inset: 0;
-  background-image: url('assets/hero-bg.jpg');
+  background-image: var(--hero-image);
   background-size: cover;
   background-position: center 30%;
   background-repeat: no-repeat;
